@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Timers;
 using System.Threading;
 using System.Windows.Threading;
 
@@ -11,43 +10,48 @@ namespace WpfDataBinding
 {
     class Person : INotifyPropertyChanged
     {
-        
-        System.Threading.Timer timer;
+
+        public Timer timer;
         string _Jmeno, _Prijmeni;
         DateTime _Narozeni;
 
-        
         public Person()
         {
-            timer = new System.Threading.Timer(
-                (a)=> { Jmeno += "A"; }, 
-                null, 
-                0, 
+            timer = new Timer(
+                (a) => { Jmeno += "."; },
+                null,
+                0,
                 1000);
         }
 
-        public string Jmeno {
-            get {
+        public string Jmeno
+        {
+            get
+            {
                 return _Jmeno;
             }
-            set {
+            set
+            {
                 _Jmeno = value;
                 OnPropertyChanged("Jmeno");
                 OnPropertyChanged("Status");
             }
         }
-        public string Prijmeni {
+        public string Prijmeni
+        {
             get
             {
                 return _Prijmeni;
             }
-            set {
+            set
+            {
                 _Prijmeni = value;
                 OnPropertyChanged("Prijmeni");
                 OnPropertyChanged("Status");
             }
         }
-        public DateTime Narozeni {
+        public DateTime Narozeni
+        {
             get
             {
                 return _Narozeni;
@@ -69,7 +73,7 @@ namespace WpfDataBinding
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        
+
 
         public override string ToString()
         {
@@ -88,8 +92,6 @@ namespace WpfDataBinding
     /// </summary>
     public partial class MainWindow : Window
     {
-        
-
         Person p = new Person()
         {
             Jmeno = "Jan",
@@ -108,13 +110,15 @@ namespace WpfDataBinding
             BindingExpression expr = tbPrijmeni.GetBindingExpression(TextBox.TextProperty);
             expr?.UpdateSource();
 
-            MessageBox.Show(p.ToString());
+            MessageBox.Show(p.ToString() + " Aktualizováno silou: " + expr.ResolvedSourcePropertyName);
+            p.timer.Change(0, 1000); // start it again
         }
 
         private void BtClear_Click(object sender, RoutedEventArgs e)
         {
             p.Jmeno = p.Prijmeni = "";
             p.Narozeni = new DateTime(1900, 1, 1);
+            p.timer.Change(Timeout.Infinite, Timeout.Infinite); // stop timer
         }
     }
 
