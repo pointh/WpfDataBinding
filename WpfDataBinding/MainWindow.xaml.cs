@@ -3,13 +3,28 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Timers;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace WpfDataBinding
 {
     class Person : INotifyPropertyChanged
     {
+        
+        System.Threading.Timer timer;
         string _Jmeno, _Prijmeni;
         DateTime _Narozeni;
+
+        
+        public Person()
+        {
+            timer = new System.Threading.Timer(
+                (a)=> { Jmeno += "A"; }, 
+                null, 
+                0, 
+                1000);
+        }
 
         public string Jmeno {
             get {
@@ -54,6 +69,8 @@ namespace WpfDataBinding
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        
+
         public override string ToString()
         {
             return Jmeno + " " + Prijmeni + " " + Narozeni.ToShortDateString();
@@ -71,6 +88,8 @@ namespace WpfDataBinding
     /// </summary>
     public partial class MainWindow : Window
     {
+        
+
         Person p = new Person()
         {
             Jmeno = "Jan",

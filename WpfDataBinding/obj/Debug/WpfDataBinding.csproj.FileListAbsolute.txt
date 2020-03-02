@@ -27,3 +27,4 @@ Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding.Properties.
 Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding.csproj.GenerateResource.cache
 Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding.exe
 Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding.pdb
+Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding.csproj.CoreCompileInputs.cache
