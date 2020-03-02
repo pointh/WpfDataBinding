@@ -18,6 +18,7 @@ namespace WpfDataBinding
             set {
                 _Jmeno = value;
                 OnPropertyChanged("Jmeno");
+                OnPropertyChanged("Status");
             }
         }
         public string Prijmeni {
@@ -28,6 +29,7 @@ namespace WpfDataBinding
             set {
                 _Prijmeni = value;
                 OnPropertyChanged("Prijmeni");
+                OnPropertyChanged("Status");
             }
         }
         public DateTime Narozeni {
@@ -39,6 +41,7 @@ namespace WpfDataBinding
             {
                 _Narozeni = value;
                 OnPropertyChanged("Narozeni");
+                OnPropertyChanged("Status");
             }
         }
         public string Status

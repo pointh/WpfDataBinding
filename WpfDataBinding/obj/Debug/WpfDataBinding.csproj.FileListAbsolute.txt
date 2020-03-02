@@ -13,3 +13,17 @@ C:\gdrive\SSPS\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding.csproj.Gen
 C:\gdrive\SSPS\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding.csproj.CoreCompileInputs.cache
 C:\gdrive\SSPS\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding.exe
 C:\gdrive\SSPS\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding.pdb
+Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\bin\Debug\WpfDataBinding.exe.config
+Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\bin\Debug\WpfDataBinding.exe
+Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\bin\Debug\WpfDataBinding.pdb
+Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding.csprojAssemblyReference.cache
+Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\obj\Debug\MainWindow.g.cs
+Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\obj\Debug\App.g.cs
+Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding_MarkupCompile.cache
+Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding_MarkupCompile.lref
+Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\obj\Debug\MainWindow.baml
+Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding.g.resources
+Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding.Properties.Resources.resources
+Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding.csproj.GenerateResource.cache
+Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding.exe
+Z:\PVA\3RMVOP\WpfDataBinding\WpfDataBinding\obj\Debug\WpfDataBinding.pdb
