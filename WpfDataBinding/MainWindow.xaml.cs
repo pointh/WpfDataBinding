@@ -5,31 +5,21 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Threading;
 using System.Windows.Threading;
+using System.Globalization;
 
 namespace WpfDataBinding
 {
     class Person : INotifyPropertyChanged
     {
+        private string _Jmeno, _Prijmeni;
+        private DateTime _Narozeni;
 
-        public Timer timer;
-        string _Jmeno, _Prijmeni;
-        DateTime _Narozeni;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public Person()
-        {
-            timer = new Timer(
-                (a) => { Jmeno += "."; },
-                null,
-                0,
-                1000);
-        }
-
+        // Při každé změně dat chceme akutalizovat status bar
         public string Jmeno
         {
-            get
-            {
-                return _Jmeno;
-            }
+            get => _Jmeno;
             set
             {
                 _Jmeno = value;
@@ -39,10 +29,7 @@ namespace WpfDataBinding
         }
         public string Prijmeni
         {
-            get
-            {
-                return _Prijmeni;
-            }
+            get => _Prijmeni;
             set
             {
                 _Prijmeni = value;
@@ -52,10 +39,7 @@ namespace WpfDataBinding
         }
         public DateTime Narozeni
         {
-            get
-            {
-                return _Narozeni;
-            }
+            get => _Narozeni;
             set
             {
                 _Narozeni = value;
@@ -63,23 +47,18 @@ namespace WpfDataBinding
                 OnPropertyChanged("Status");
             }
         }
+
         public string Status
         {
-            get
-            {
-                return Jmeno + " " + Prijmeni + " " + Narozeni.ToString();
-            }
+            get => Jmeno + " " + Prijmeni + " " + Narozeni.ToString();
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-
 
         public override string ToString()
         {
             return Jmeno + " " + Prijmeni + " " + Narozeni.ToShortDateString();
         }
 
+        // pomocná metoda pro informaci o změně v datech
         private void OnPropertyChanged(string property)
         {
             if (PropertyChanged != null) // jestli někdo poslouchá ...
@@ -92,17 +71,18 @@ namespace WpfDataBinding
     /// </summary>
     public partial class MainWindow : Window
     {
-        Person p = new Person()
-        {
-            Jmeno = "Jan",
-            Prijmeni = "Vyčítal",
-            Narozeni = new DateTime(2000, 11, 28)
-        };
+        Person p;
 
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = p;
+            
+            DataContext =
+            p = new Person()
+            {
+                Narozeni = DateTime.Now
+            };
+            
         }
 
         private void BtShow_Click(object sender, RoutedEventArgs e)
@@ -110,15 +90,15 @@ namespace WpfDataBinding
             BindingExpression expr = tbPrijmeni.GetBindingExpression(TextBox.TextProperty);
             expr?.UpdateSource();
 
-            MessageBox.Show(p.ToString() + " Aktualizováno silou: " + expr.ResolvedSourcePropertyName);
-            p.timer.Change(0, 1000); // start it again
+            MessageBox.Show(p.ToString() + "\n" + 
+                expr.ResolvedSourcePropertyName + ": vynucená akutalizace");
         }
 
+        // Změna dat, vzhledem k bindingu, stačí i k aktualizaci grafické podoby formuláře
         private void BtClear_Click(object sender, RoutedEventArgs e)
         {
-            p.Jmeno = p.Prijmeni = "";
-            p.Narozeni = new DateTime(1900, 1, 1);
-            p.timer.Change(Timeout.Infinite, Timeout.Infinite); // stop timer
+            p.Jmeno = p.Prijmeni = string.Empty;
+            p.Narozeni = DateTime.Now;
         }
     }
 
