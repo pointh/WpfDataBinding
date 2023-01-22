@@ -17,6 +17,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -24,8 +25,10 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="8*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Jméno" Grid.Column="0" Grid.Row="0"/>
+        <TextBlock Text="Jméno" Grid.Column="0" Grid.Row="0"  Background="{StaticResource CorporateBlue}" 
+                   Foreground="{StaticResource CorporateRed}"/>
         <TextBox x:Name="tbJmeno" Grid.Column="1" Grid.Row="0" 
                  Text="{Binding Jmeno, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  ToolTip="Aktualizuje se okamžitě"/>
@@ -38,10 +41,16 @@
                     Text="{Binding Narozeni, Mode=TwoWay}"
                     ToolTip="Aktualizuje se okamžitě"/>
         <Button x:Name="btShow" Content="Ukaž" Grid.Column="0" Grid.Row="3" Click="BtShow_Click"
+                Style="{StaticResource CorporateButton}"
                 ToolTip="Ukáže v MessageBoxu stav informací na pozadí."/>
         <Button x:Name="btClear" Content="Čisti" Grid.Column="1" Grid.Row="3" Click="BtClear_Click"
+                Style="{StaticResource CorporateButton}"
                 ToolTip="Vymaže data a WPF se postará o zbytek"/>
-        <TextBlock VerticalAlignment="Bottom" x:Name="stavPerson" Grid.Row="4" Grid.ColumnSpan="2" 
+        <Button x:Name="btDefault" Content="Nastav" Grid.Column="2" Grid.Row="3" Click="btDefault_Click"
+                Style="{StaticResource CorporateButton}"
+                ToolTip="Nastaví implicitní hodnoty"/>
+        <ListView x:Name="lv" ItemsSource="{Binding AllPersons}" Grid.Row="4" Grid.ColumnSpan="3" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+        <TextBlock VerticalAlignment="Bottom" x:Name="stavPerson" Grid.Row="5" Grid.ColumnSpan="2" 
                    Text="{Binding Status}"/>
         
     </Grid>

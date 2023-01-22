@@ -4,6 +4,14 @@
              xmlns:local="clr-namespace:WpfDataBinding"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <Brush x:Key="CorporateBlue">#0000</Brush>
+            <Brush x:Key="CorporateRed">#aa0000</Brush>
+            <Style x:Key="CorporateButton" TargetType="Button">
+                <Setter Property="Background" Value="#0000AA"/>
+                <Setter Property="Foreground" Value="LightYellow"/>
+                <Setter Property="Margin" Value="2, 5"/>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
