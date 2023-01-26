@@ -83,6 +83,8 @@ namespace WpfDataBinding
     {
         Person p;
 
+        public double TextBoxLabelFontSize { get; private set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -92,7 +94,7 @@ namespace WpfDataBinding
             {
                 Narozeni = DateTime.Now
             };
-            
+            TextBoxLabelFontSize = this.textBlockJmeno.FontSize;
         }
 
         private void BtShow_Click(object sender, RoutedEventArgs e)
@@ -100,8 +102,6 @@ namespace WpfDataBinding
             BindingExpression expr = tbPrijmeni.GetBindingExpression(TextBox.TextProperty);
             expr?.UpdateSource();
 
-            MessageBox.Show(p.ToString() + "\n" + 
-                expr.ResolvedSourcePropertyName + ": vynucená akutalizace");
             Person.AllPersons.Add(Person.PersonCopy(p));
             lv.ItemsSource = null;
             lv.ItemsSource = Person.AllPersons;

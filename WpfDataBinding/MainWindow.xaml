@@ -5,17 +5,62 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:WpfDataBinding"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="Person"
+    x:Name="MW"
+    Title="Osoba"
     Width="800"
     Height="450"
     d:DataContext="{d:DesignInstance Type=local:Person}"
+    Background="WhiteSmoke"
+    BorderThickness="1"
     mc:Ignorable="d">
 
-    <!--
-    <Window.DataContext>
-        <local:Person/>
-    </Window.DataContext>
-    -->
+    <Window.Triggers>
+        <!--
+            Když se myš dostane ven z formuláře,
+            zvětši rámeček na šířku 8 během 0.5s a
+            změň barvu pozadí na šedou ve stejném čase.
+        -->
+        <EventTrigger RoutedEvent="Window.MouseLeave">
+            <BeginStoryboard>
+                <Storyboard>
+                    <ThicknessAnimation
+                        AutoReverse="False"
+                        Storyboard.TargetName="MW"
+                        Storyboard.TargetProperty="(Window.BorderThickness)"
+                        To="8"
+                        Duration="0:0:0.5" />
+                    <ColorAnimation
+                        Storyboard.TargetName="MW"
+                        Storyboard.TargetProperty="Background.Color"
+                        To="LightGray"
+                        Duration="0:0:0.5" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+
+        <!--
+            Když se myš vrátí zpět do formuláře,
+            zmenši rámeček na šířku 1 během 0.5s a
+            změň barvu pozadí zpět na bílou ve stejném čase.
+        -->
+        <EventTrigger RoutedEvent="Window.MouseEnter">
+            <BeginStoryboard>
+                <Storyboard>
+                    <ThicknessAnimation
+                        AutoReverse="False"
+                        Storyboard.TargetName="MW"
+                        Storyboard.TargetProperty="(Window.BorderThickness)"
+                        To="1"
+                        Duration="0:0:0.5" />
+                    <ColorAnimation
+                        Storyboard.TargetName="MW"
+                        Storyboard.TargetProperty="Background.Color"
+                        To="WhiteSmoke"
+                        Duration="0:0:0.5" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
 
     <Grid Margin="20" ShowGridLines="true">
         <Grid.ColumnDefinitions>
@@ -27,7 +72,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="2*" />
             <RowDefinition Height="8*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -38,6 +83,7 @@
             Background="{StaticResource CorporateBlue}"
             Foreground="{StaticResource CorporateRed}"
             Text="Jméno" />
+
         <TextBox
             x:Name="tbJmeno"
             Grid.Row="0"
@@ -45,7 +91,12 @@
             Text="{Binding Jmeno, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             ToolTip="Aktualizuje se okamžitě">
             <TextBox.Triggers>
-                <EventTrigger RoutedEvent="TextBlock.GotFocus">
+                <!--
+                    Když získá textbox se jménem focus, zvětši velikost
+                    fontu pro textBlockJmeno a pro tbJmeno (nemá TargetName, tedy platí pro
+                    samotný textbox tbJmeno
+                -->
+                <EventTrigger RoutedEvent="TextBox.GotFocus">
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimation
@@ -57,14 +108,46 @@
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
-                <EventTrigger RoutedEvent="TextBlock.LostFocus">
+                <EventTrigger RoutedEvent="TextBox.GotFocus">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                AutoReverse="False"
+                                Storyboard.TargetProperty="(TextBlock.FontSize)"
+                                To="16.0"
+                                Duration="0:0:0.5" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+
+                <!--
+                    Když ztratí textbox se jménem focus, zmenši velikost
+                    fontu pro textBlockJmeno a pro tbJmeno na původní velikost,
+                    kterou měli při vytvoření okna.
+                    TextBoxLabelFontSize je definovaný ve Window a inicializovaný
+                    v konstruktoru
+                -->
+
+                <EventTrigger RoutedEvent="TextBox.LostFocus">
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimation
                                 AutoReverse="False"
                                 Storyboard.TargetName="textBlockJmeno"
                                 Storyboard.TargetProperty="(TextBlock.FontSize)"
-                                To="12.0"
+                                To="{Binding TextBoxLabelFontSize}"
+                                Duration="0:0:0.5" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+
+                <EventTrigger RoutedEvent="TextBox.LostFocus">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                AutoReverse="False"
+                                Storyboard.TargetProperty="(TextBlock.FontSize)"
+                                To="{Binding TextBoxLabelFontSize}"
                                 Duration="0:0:0.5" />
                         </Storyboard>
                     </BeginStoryboard>
@@ -76,13 +159,15 @@
             x:Name="textBlockPrijmeni"
             Grid.Row="1"
             Grid.Column="0"
+            Background="{StaticResource CorporateBlue}"
+            Foreground="{StaticResource CorporateRed}"
             Text="Příjmení" />
         <TextBox
             x:Name="tbPrijmeni"
             Grid.Row="1"
             Grid.Column="1"
             Text="{Binding Prijmeni, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-            ToolTip="Aktualizuje se po opuštění" >
+            ToolTip="Aktualizuje se po opuštění">
             <TextBox.Triggers>
                 <EventTrigger RoutedEvent="TextBlock.GotFocus">
                     <BeginStoryboard>
@@ -91,7 +176,7 @@
                                 AutoReverse="False"
                                 Storyboard.TargetName="textBlockPrijmeni"
                                 Storyboard.TargetProperty="(TextBlock.FontSize)"
-                                To="16.0"
+                                To="16"
                                 Duration="0:0:0.5" />
                         </Storyboard>
                     </BeginStoryboard>
@@ -103,19 +188,19 @@
                                 AutoReverse="False"
                                 Storyboard.TargetName="textBlockPrijmeni"
                                 Storyboard.TargetProperty="(TextBlock.FontSize)"
-                                To="12.0"
+                                To="{Binding TextBoxLabelFontSize}"
                                 Duration="0:0:0.5" />
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
-
             </TextBox.Triggers>
-
         </TextBox>
         <TextBlock
             x:Name="textBlockDatum"
             Grid.Row="2"
             Grid.Column="0"
+            Background="{StaticResource CorporateBlue}"
+            Foreground="{StaticResource CorporateRed}"
             Text="Datum narození" />
         <DatePicker
             x:Name="datNar"
@@ -143,7 +228,7 @@
                                 AutoReverse="False"
                                 Storyboard.TargetName="textBlockDatum"
                                 Storyboard.TargetProperty="(TextBlock.FontSize)"
-                                To="12.0"
+                                To="{Binding TextBoxLabelFontSize}"
                                 Duration="0:0:0.5" />
                         </Storyboard>
                     </BeginStoryboard>
@@ -155,7 +240,7 @@
             Grid.Row="3"
             Grid.Column="0"
             Click="BtShow_Click"
-            Content="Ukaž"
+            Content="Ulož"
             Style="{StaticResource CorporateButton}"
             ToolTip="Ukáže v MessageBoxu stav informací na pozadí." />
         <Button
@@ -171,7 +256,7 @@
             Grid.Row="3"
             Grid.Column="2"
             Click="btDefault_Click"
-            Content="Nastav"
+            Content="Nastav Nováka"
             Style="{StaticResource CorporateButton}"
             ToolTip="Nastaví implicitní hodnoty" />
 
@@ -181,6 +266,7 @@
             Grid.ColumnSpan="3"
             d:ItemsSource="{d:SampleData ItemCount=15}"
             ItemsSource="{Binding AllPersons}" />
+
         <TextBlock
             x:Name="stavPerson"
             Grid.Row="5"
@@ -191,7 +277,7 @@
             Background="LightGreen"
             Text="{Binding Status}">
 
-            <!--  Animates the text block's width.  -->
+            <!--  Animuje šířku textbloku  -->
             <TextBlock.Triggers>
                 <EventTrigger RoutedEvent="TextBlock.Loaded">
                     <BeginStoryboard>
@@ -199,7 +285,6 @@
                             <DoubleAnimation
                                 AutoReverse="True"
                                 RepeatBehavior="Forever"
-                                Storyboard.TargetName="stavPerson"
                                 Storyboard.TargetProperty="(TextBlock.Width)"
                                 To="50.0"
                                 Duration="0:0:10" />
