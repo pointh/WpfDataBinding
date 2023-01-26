@@ -120,6 +120,17 @@ namespace WpfDataBinding
             p.Prijmeni = "Novák";
             p.Narozeni = new DateTime(1990, 1, 1);
         }
+
+        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            Person toDelete = ((Button)sender).DataContext as Person;
+            MessageBox.Show(toDelete.Jmeno + toDelete.Prijmeni);
+            Person.AllPersons.Remove(toDelete);
+
+            lv.ItemsSource = null;
+            lv.ItemsSource = Person.AllPersons;
+        }
     }
 
 

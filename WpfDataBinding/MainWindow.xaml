@@ -62,7 +62,7 @@
         </EventTrigger>
     </Window.Triggers>
 
-    <Grid Margin="20" ShowGridLines="true">
+    <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
@@ -264,8 +264,32 @@
             x:Name="lv"
             Grid.Row="4"
             Grid.ColumnSpan="3"
+            HorizontalContentAlignment="Stretch"
             d:ItemsSource="{d:SampleData ItemCount=15}"
-            ItemsSource="{Binding AllPersons}" />
+            ItemsSource="{Binding AllPersons}">
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="1" Text="{Binding Jmeno}" />
+                        <TextBlock Grid.Column="0" Text="{Binding Prijmeni}" />
+                        <TextBlock Grid.Column="2" Text="{Binding Narozeni}" />
+                        <Button
+                            x:Name="deleteButton"
+                            Grid.Column="3"
+                            MinWidth="100"
+                            Content="Vymaž" 
+                            Click="deleteButton_Click"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <TextBlock
             x:Name="stavPerson"
