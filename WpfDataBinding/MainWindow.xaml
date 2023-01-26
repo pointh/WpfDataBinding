@@ -276,16 +276,23 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="1" Text="{Binding Jmeno}" />
                         <TextBlock Grid.Column="0" Text="{Binding Prijmeni}" />
                         <TextBlock Grid.Column="2" Text="{Binding Narozeni}" />
                         <Button
                             x:Name="deleteButton"
-                            Grid.Column="3"
+                            Grid.Column="4"
                             MinWidth="100"
                             Content="Vymaž" 
                             Click="deleteButton_Click"/>
+                        <Button
+                            x:Name="editButton"
+                            Grid.Column="3"
+                            MinWidth="100"
+                            Content="Uprav" 
+                            Click="editButton_Click"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -125,11 +125,17 @@ namespace WpfDataBinding
         {
 
             Person toDelete = ((Button)sender).DataContext as Person;
-            MessageBox.Show(toDelete.Jmeno + toDelete.Prijmeni);
             Person.AllPersons.Remove(toDelete);
 
             lv.ItemsSource = null;
             lv.ItemsSource = Person.AllPersons;
+        }
+
+        private void editButton_Click(object sender, RoutedEventArgs e)
+        {
+            p.Jmeno = (((Button)sender).DataContext as Person).Jmeno;
+            p.Prijmeni = (((Button)sender).DataContext as Person).Prijmeni;
+            p.Narozeni = (((Button)sender).DataContext as Person).Narozeni;
         }
     }
 
