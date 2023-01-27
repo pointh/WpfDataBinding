@@ -88,7 +88,7 @@
             x:Name="tbJmeno"
             Grid.Row="0"
             Grid.Column="1"
-            Text="{Binding Jmeno, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Text="{Binding Jmeno}"
             ToolTip="Aktualizuje se okamžitě">
             <TextBox.Triggers>
                 <!--
@@ -166,7 +166,7 @@
             x:Name="tbPrijmeni"
             Grid.Row="1"
             Grid.Column="1"
-            Text="{Binding Prijmeni, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+            Text="{Binding Prijmeni}"
             ToolTip="Aktualizuje se po opuštění">
             <TextBox.Triggers>
                 <EventTrigger RoutedEvent="TextBlock.GotFocus">
@@ -236,10 +236,10 @@
             </DatePicker.Triggers>
         </DatePicker>
         <Button
-            x:Name="btShow"
+            x:Name="btSave"
             Grid.Row="3"
             Grid.Column="0"
-            Click="BtShow_Click"
+            Click="btSave_Click"
             Content="Ulož"
             Style="{StaticResource CorporateButton}"
             ToolTip="Ukáže v MessageBoxu stav informací na pozadí." />
@@ -317,7 +317,7 @@
                                 AutoReverse="True"
                                 RepeatBehavior="Forever"
                                 Storyboard.TargetProperty="(TextBlock.Width)"
-                                To="50.0"
+                                To="200.0"
                                 Duration="0:0:10" />
                         </Storyboard>
                     </BeginStoryboard>
