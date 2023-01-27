@@ -11,12 +11,13 @@ using System.Collections.Generic;
 
 namespace WpfDataBinding
 {
-    class Person : INotifyPropertyChanged
+    public class Person : INotifyPropertyChanged
     {
         public static List<Person> AllPersons { get; set; } = new List<Person>();
 
         private string _Jmeno, _Prijmeni;
         private DateTime _Narozeni;
+        public Guid _ID {get; set;}
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -29,8 +30,24 @@ namespace WpfDataBinding
                 _Jmeno = value;
                 OnPropertyChanged("Jmeno");
                 OnPropertyChanged("Status");
+                if (_Jmeno.Length < 3)
+                {
+                    JmenoErrorMsg = "Jméno musí být delší než 2 znaky.";
+                    JmenoErrorVisible = Visibility.Visible;
+                }
+                else
+                {
+                    JmenoErrorMsg = string.Empty;
+                    JmenoErrorVisible = Visibility.Hidden;
+                }
+                OnPropertyChanged("JmenoErrorVisible");
+                OnPropertyChanged("JmenoErrorMsg");
             }
         }
+
+        public Visibility JmenoErrorVisible { get; set; }
+        public string JmenoErrorMsg { get; set; }
+        
         public string Prijmeni
         {
             get => _Prijmeni;
@@ -71,8 +88,21 @@ namespace WpfDataBinding
 
         public static Person PersonCopy(Person p)
         {
-            Person q = new Person() { Jmeno = p.Jmeno, Prijmeni= p.Prijmeni, Narozeni=p.Narozeni };
+            Person q = new Person() 
+            { 
+                Jmeno = p.Jmeno, 
+                Prijmeni= p.Prijmeni, 
+                Narozeni=p.Narozeni,
+                _ID = Guid.NewGuid(),
+            };
+
             return q;
+        }
+
+        public static void Clear(Person p)
+        {
+            p.Jmeno = p.Prijmeni = string.Empty;
+            p.Narozeni = new DateTime(1990, 1, 1);
         }
     }
 
@@ -97,12 +127,24 @@ namespace WpfDataBinding
             TextBoxLabelFontSize = this.textBlockJmeno.FontSize;
         }
 
-        private void BtShow_Click(object sender, RoutedEventArgs e)
+        private void btSave_Click(object sender, RoutedEventArgs e)
         {
-            BindingExpression expr = tbPrijmeni.GetBindingExpression(TextBox.TextProperty);
-            expr?.UpdateSource();
+            //BindingExpression expr = tbPrijmeni.GetBindingExpression(TextBox.TextProperty);
+            //expr?.UpdateSource();
 
-            Person.AllPersons.Add(Person.PersonCopy(p));
+            Person q = Person.AllPersons.Find(t => t._ID == p._ID);
+            int qIndex = Person.AllPersons.IndexOf(q);
+
+            if ( q != null)
+            {
+                Person.AllPersons[qIndex] = Person.PersonCopy(p);
+            }
+            else
+            {
+                Person.AllPersons.Add(Person.PersonCopy(p));
+                Person.Clear(p);
+            }
+
             lv.ItemsSource = null;
             lv.ItemsSource = Person.AllPersons;
         }
@@ -110,12 +152,12 @@ namespace WpfDataBinding
         // Změna dat, vzhledem k bindingu, stačí i k aktualizaci grafické podoby formuláře
         private void BtClear_Click(object sender, RoutedEventArgs e)
         {
-            p.Jmeno = p.Prijmeni = string.Empty;
-            p.Narozeni = DateTime.Now;
+            Person.Clear(p);
         }
 
         private void btDefault_Click(object sender, RoutedEventArgs e)
         {
+            Person.Clear(p);
             p.Jmeno = "Jan";
             p.Prijmeni = "Novák";
             p.Narozeni = new DateTime(1990, 1, 1);
@@ -123,7 +165,6 @@ namespace WpfDataBinding
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
-
             Person toDelete = ((Button)sender).DataContext as Person;
             Person.AllPersons.Remove(toDelete);
 
@@ -136,6 +177,7 @@ namespace WpfDataBinding
             p.Jmeno = (((Button)sender).DataContext as Person).Jmeno;
             p.Prijmeni = (((Button)sender).DataContext as Person).Prijmeni;
             p.Narozeni = (((Button)sender).DataContext as Person).Narozeni;
+            p._ID = (((Button)sender).DataContext as Person)._ID;
         }
     }
 

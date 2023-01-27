@@ -8,6 +8,7 @@
         <ResourceDictionary>
             <Brush x:Key="CorporateBlue">#0000</Brush>
             <Brush x:Key="CorporateRed">#aa0000</Brush>
+            <Brush x:Key="ErrorRed">#aa4400</Brush>
             <Style x:Key="CorporateButton" TargetType="Button">
                 <Setter Property="Background" Value="#0000AA" />
                 <Setter Property="Foreground" Value="LightYellow" />
