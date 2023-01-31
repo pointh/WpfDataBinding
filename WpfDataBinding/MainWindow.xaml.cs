@@ -30,8 +30,26 @@ namespace WpfDataBinding
                 _Jmeno = value;
                 OnPropertyChanged("Jmeno");
                 OnPropertyChanged("Status");
+                if (_Jmeno.Length < 3)
+                {
+                    JmenoErrorMsg = "Jméno musí být delší než 2 znaky.";
+                    JmenoErrorVisible = Visibility.Visible;
+                    OnPropertyChanged("JmenoErrorVisible");
+                    OnPropertyChanged("JmenoErrorMsg");
+                }
+                else
+                {
+                    JmenoErrorMsg = string.Empty;
+                    JmenoErrorVisible = Visibility.Hidden;
+                    OnPropertyChanged("JmenoErrorVisible");
+                    OnPropertyChanged("JmenoErrorMsg");
+                }
             }
         }
+
+        public Visibility JmenoErrorVisible { get; set; }
+        public string JmenoErrorMsg { get; set; }
+        
         public string Prijmeni
         {
             get => _Prijmeni;

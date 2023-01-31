@@ -83,12 +83,15 @@
             Background="{StaticResource CorporateBlue}"
             Foreground="{StaticResource CorporateRed}"
             Text="Jméno" />
-
+        <TextBlock Grid.Row="0" Grid.Column="2" Background="{StaticResource CorporateBlue}"
+            Foreground="{StaticResource ErrorRed}"
+            Visibility="{Binding JmenoErrorVisible}"
+            Text="{Binding JmenoErrorMsg}"/>
         <TextBox
             x:Name="tbJmeno"
             Grid.Row="0"
             Grid.Column="1"
-            Text="{Binding Jmeno}"
+            Text="{Binding Jmeno, UpdateSourceTrigger=PropertyChanged}"
             ToolTip="Aktualizuje se okamžitě">
             <TextBox.Triggers>
                 <!--
