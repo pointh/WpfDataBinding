@@ -83,10 +83,14 @@
             Background="{StaticResource CorporateBlue}"
             Foreground="{StaticResource CorporateRed}"
             Text="Jméno" />
-        <TextBlock Grid.Row="0" Grid.Column="2" Background="{StaticResource CorporateBlue}"
-            Foreground="{StaticResource ErrorRed}"
-            Visibility="{Binding JmenoErrorVisible}"
-            Text="{Binding JmenoErrorMsg}"/>
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="2"
+            Margin="10,0"
+            Background="{StaticResource CorporateBlue}"
+            Foreground="Red"
+            Text="{Binding JmenoErrorMsg}"
+            Visibility="{Binding JmenoErrorVisible}" />
         <TextBox
             x:Name="tbJmeno"
             Grid.Row="0"
@@ -137,7 +141,7 @@
                             <DoubleAnimation
                                 AutoReverse="False"
                                 Storyboard.TargetName="textBlockJmeno"
-                                Storyboard.TargetProperty="(TextBlock.FontSize)"
+                                Storyboard.TargetProperty="(TextBlock.FontSize)"                               
                                 To="{Binding TextBoxLabelFontSize}"
                                 Duration="0:0:0.5" />
                         </Storyboard>
@@ -169,8 +173,17 @@
             x:Name="tbPrijmeni"
             Grid.Row="1"
             Grid.Column="1"
-            Text="{Binding Prijmeni}"
-            ToolTip="Aktualizuje se po opuštění">
+            Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+            <TextBox.Text>
+                <Binding
+                    Mode="TwoWay"
+                    Path="Prijmeni"
+                    UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:PrijmeniValidator />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
             <TextBox.Triggers>
                 <EventTrigger RoutedEvent="TextBlock.GotFocus">
                     <BeginStoryboard>
@@ -198,6 +211,7 @@
                 </EventTrigger>
             </TextBox.Triggers>
         </TextBox>
+
         <TextBlock
             x:Name="textBlockDatum"
             Grid.Row="2"
@@ -242,7 +256,8 @@
             x:Name="btSave"
             Grid.Row="3"
             Grid.Column="0"
-            Click="btSave_Click"
+            Command="{Binding SaveCommand}"
+            CommandParameter="{Binding .}"
             Content="Ulož"
             Style="{StaticResource CorporateButton}"
             ToolTip="Ukáže v MessageBoxu stav informací na pozadí." />
@@ -283,19 +298,20 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="1" Text="{Binding Jmeno}" />
                         <TextBlock Grid.Column="0" Text="{Binding Prijmeni}" />
-                        <TextBlock Grid.Column="2" Text="{Binding Narozeni}" />
+                        <TextBlock Grid.Column="2" Text="{Binding Narozeni, StringFormat='d. MMMM yyyy'}" />
                         <Button
                             x:Name="deleteButton"
                             Grid.Column="4"
                             MinWidth="100"
-                            Content="Vymaž" 
-                            Click="deleteButton_Click"/>
+                            Command="{Binding DeleteCommand}"
+                            CommandParameter="{Binding .}"
+                            Content="Vymaž" />
                         <Button
                             x:Name="editButton"
                             Grid.Column="3"
                             MinWidth="100"
-                            Content="Uprav" 
-                            Click="editButton_Click"/>
+                            Click="editButton_Click"
+                            Content="Uprav" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
