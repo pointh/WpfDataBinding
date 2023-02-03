@@ -25,6 +25,7 @@ namespace TestProject1
             Person.AllPersons.Clear();
             Person.AllPersons.Add(storedPerson);
 
+            // Další osoba do kolekce
             Person p = new Person()
             {
                 Narozeni = DateTime.Now,
@@ -34,6 +35,7 @@ namespace TestProject1
             };
 
             // Act
+            // SaveCommand by mìl pøidat nový záznam
             p.SaveCommand.Execute(p);
 
             // Assert
@@ -60,6 +62,7 @@ namespace TestProject1
             };
 
             // Act
+            // SaveCommand by mìl zmìnit záznam s existujícím _ID
             x.SaveCommand.Execute(x);
 
             // Assert
